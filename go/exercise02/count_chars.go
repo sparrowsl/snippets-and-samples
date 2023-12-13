@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -12,6 +13,11 @@ func main() {
 	fmt.Print("What is the input string? ")
 	scanner.Scan()
 	value := scanner.Text()
+
+	if len(strings.TrimSpace(value)) == 0 {
+		fmt.Println("Please enter something.")
+		return
+	}
 
 	total := countChars(value)
 	fmt.Printf("%v has %v characters.\n", value, total)
