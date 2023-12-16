@@ -18,6 +18,7 @@ func main() {
 	scanner.Scan()
 	width, _ := strconv.Atoi(scanner.Text())
 
+	squareMeters := (float64(length) * float64(width) * 0.09290304)
 	fmt.Printf("You entered dimensions of %v feet by %v feet.\n", length, width)
-	fmt.Printf("The area is\n%v square feet\n%v square meters\n", length*width, (float64(length) * float64(width) * 0.09290304))
+	fmt.Printf("The area is\n%v square feet\n%v square meters\n", length*width, squareMeters)
 }
