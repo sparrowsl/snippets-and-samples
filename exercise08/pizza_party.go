@@ -12,11 +12,19 @@ func main() {
 
 	fmt.Print("How many people? ")
 	scanner.Scan()
-	people, _ := strconv.Atoi(scanner.Text())
+	people, err := strconv.Atoi(scanner.Text())
+	if err != nil {
+		fmt.Println("Please enter a valid number!!")
+		return
+	}
 
 	fmt.Print("How many pizzas do you have? ")
 	scanner.Scan()
-	pizzas, _ := strconv.Atoi(scanner.Text())
+	pizzas, err := strconv.Atoi(scanner.Text())
+	if err != nil {
+		fmt.Println("Please enter a valid number!!")
+		return
+	}
 
 	leftovers := people % pizzas
 	fmt.Printf("%v people with %v pizzas\nEach person gets %v pieces of pizza.\n", people, pizzas, (people/pizzas)/2)
