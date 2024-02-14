@@ -18,7 +18,7 @@ func main() {
 	scanner.Scan()
 	exchangeRate, _ := strconv.ParseFloat(scanner.Text(), 64)
 
-	toDollars := (float64(euros) * exchangeRate) / exchangeRate
+	toDollars := (float64(euros) * exchangeRate) / 100
 
 	fmt.Printf("%v euros at an exchange rate of %v is\n%.2f U.S. dollars.\n", euros, exchangeRate, toDollars)
 }
