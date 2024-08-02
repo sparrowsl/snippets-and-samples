@@ -5,8 +5,8 @@ retire_age = int(input("At what age would you like to retire? "))
 
 # quit program if user is already retire
 if age >= retire_age:
-	print("You are already retired!!")
-	exit(0)
+    print("You are already retired!!")
+    exit(0)
 
 current_year = datetime.now().year
 

@@ -1,5 +1,6 @@
 def count_chars(sentence: str) -> int:
-  return len(sentence)
+    return len(sentence)
+
 
 value: str = input("What is the input string? ").strip()
 total = count_chars(value)

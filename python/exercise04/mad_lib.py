@@ -1,5 +1,5 @@
-def create_mad_libs(noun: str, verb: str, adjective: str, adverb: str) -> str :
-  return f"Do you {verb} your {adjective} {noun} {adverb}? That's hilarious"
+def create_mad_libs(noun: str, verb: str, adjective: str, adverb: str) -> str:
+    return f"Do you {verb} your {adjective} {noun} {adverb}? That's hilarious"
 
 
 noun = input("Enter a noun: ")
