@@ -25,7 +25,8 @@ for name, surname, position, date in rows:
 # sorted(employees, key=lambda employee: employee["surname"])
 employees.sort(key=lambda emp: emp["surname"])
 
-print(f"{'Name':12}| {'Position':12}| Separation Date")
-print(f"{'-'*12}| {'-'*12}| {'-'*15}")
+print(f"{'Name':20}| {'Position':12}| Separation Date")
+print(f"{'-'*20}| {'-'*12}| {'-'*15}")
 for emp in employees:
-    print(f"{emp["name"]:12}| {emp["surname"]:12}| {emp["date"] or ''}")
+    name = f"{emp["name"]} {emp["surname"]}"
+    print(f"{name:20}| {emp["surname"]:12}| {emp["date"] or ''}")
