@@ -34,5 +34,4 @@ func main() {
 	if ok {
 		fmt.Printf("The name of the month is %s.\n", value)
 	}
-
 }
