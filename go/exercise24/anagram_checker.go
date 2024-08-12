@@ -33,8 +33,8 @@ func isAnagram(string1 string, string2 string) bool {
 		return false
 	}
 
-	for i := range string1 {
-		if !strings.Contains(string2, string(string1[i])) {
+	for _, val := range string1 {
+		if !strings.Contains(string2, string(val)) {
 			return false
 		}
 	}
