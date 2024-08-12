@@ -5,19 +5,27 @@ import (
 	"fmt"
 	"os"
 	"slices"
+	"strings"
 )
 
-var employees = []string{
-	"John Smith",
-	"Jackie Jackson",
-	"Chris Jones",
-	"Amanda Cullen",
-	"Jeremy Goodwin",
-}
+// John Smith
+// Jackie Jackson
+// Chris Jones
+// Amanda Cullen
+// Jeremy Goodwin
+
+var filename = "./employee_list.txt"
 
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 
+	file, err := os.ReadFile(filename)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(0)
+	}
+
+	employees := strings.Split(strings.TrimSpace(string(file)), "\n")
 	displayEmployees(employees)
 
 	fmt.Print("\nEnter an employee name to remove: ")
@@ -32,8 +40,13 @@ func main() {
 	employees = slices.DeleteFunc(employees, func(emp string) bool {
 		return emp == name
 	})
-
 	displayEmployees(employees)
+
+	// Write to file
+	err = os.WriteFile(filename, []byte(strings.Join(employees, "\n")), 0644)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func displayEmployees(names []string) {
