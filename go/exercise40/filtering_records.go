@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 	}
 	employees := []Employee{}
 
-	db, err := sql.Open("sqlite3", "./records.db")
+	db, err := sql.Open("sqlite", "./records.db")
 	if err != nil {
 		fmt.Println(err)
 		return

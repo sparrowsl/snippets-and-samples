@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
 const file string = "./employees.db"
@@ -18,7 +18,7 @@ func main() {
 	}
 	employees := []Employee{}
 
-	db, err := sql.Open("sqlite3", file)
+	db, err := sql.Open("sqlite", file)
 	if err != nil {
 		fmt.Println(err)
 		return

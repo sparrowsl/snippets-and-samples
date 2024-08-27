@@ -20,7 +20,6 @@ func main() {
 
 	for _, line := range strings.Split(trimmed, "\n") {
 		parsed := strings.Split(line, ",")
-		fmt.Printf("%-10s %-10s %-10s\n", parsed[0], parsed[1], parsed[2])
-
+		fmt.Printf("%-10s %-10s $%-10s\n", parsed[0], parsed[1], parsed[2])
 	}
 }
