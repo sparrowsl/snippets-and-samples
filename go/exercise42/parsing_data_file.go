@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
+
+	"github.com/dustin/go-humanize"
 )
 
 func main() {
@@ -20,6 +23,8 @@ func main() {
 
 	for _, line := range strings.Split(trimmed, "\n") {
 		parsed := strings.Split(line, ",")
-		fmt.Printf("%-10s %-10s $%-10s\n", parsed[0], parsed[1], parsed[2])
+		salary, _ := strconv.ParseFloat(parsed[2], 64)
+
+		fmt.Printf("%-10s %-10s $%-10s\n", parsed[0], parsed[1], humanize.Commaf(salary))
 	}
 }
