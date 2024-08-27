@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
 	"os"
 	"strconv"
@@ -16,15 +17,18 @@ func main() {
 		return
 	}
 
-	trimmed := strings.TrimSpace(string(file))
+	reader := csv.NewReader(strings.NewReader(string(file)))
+	data, err := reader.ReadAll()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
 	fmt.Printf("%-10s %-10s %-10s\n", "Last", "First", "Salary")
 	fmt.Println(strings.Repeat("-", 30))
 
-	for _, line := range strings.Split(trimmed, "\n") {
-		parsed := strings.Split(line, ",")
-		salary, _ := strconv.ParseFloat(parsed[2], 64)
-
-		fmt.Printf("%-10s %-10s $%-10s\n", parsed[0], parsed[1], humanize.Commaf(salary))
+	for _, row := range data {
+		salary, _ := strconv.ParseFloat(row[2], 64)
+		fmt.Printf("%-10s %-10s $%-10s\n", row[0], row[1], humanize.Commaf(salary))
 	}
 }
