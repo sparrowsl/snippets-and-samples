@@ -20,8 +20,6 @@ const indexHtml = `<!DOCTYPE html>
 </html>`
 
 func main() {
-	// currDir, _ := os.Getwd()
-
 	siteName := readInput("Site name: ")
 	if siteName == "" {
 		fmt.Println("site name must not be empty")
@@ -47,6 +45,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+	defer file.Close()
 
 	nameReplaced := strings.ReplaceAll(indexHtml, "{{sitename}}", siteName)
 	authorReplaced := strings.ReplaceAll(nameReplaced, "{{author}}", author)
