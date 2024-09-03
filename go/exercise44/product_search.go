@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+const filename = "./products.json"
+
 type Product struct {
 	Name     string  `json:"name"`
 	Price    float64 `json:"price"`
@@ -16,7 +18,7 @@ type Product struct {
 }
 
 func main() {
-	file, err := os.ReadFile("./products.json")
+	file, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -46,7 +48,11 @@ func main() {
 				product := newProduct()
 				product.Name = productName
 				products = append(products, product)
-				fmt.Println()
+
+				go saveProducts(products)
+				fmt.Printf("%s has been added.\n\n", productName)
+			} else {
+				fmt.Printf("invalid choice!!\n\n")
 			}
 			continue
 		}
@@ -67,6 +73,15 @@ func newProduct() Product {
 		Price:    price,
 		Quantity: quantity,
 	}
+}
+
+func saveProducts(products []Product) {
+	value := map[string]any{
+		"products": products,
+	}
+
+	marshalled, _ := json.Marshal(value)
+	os.WriteFile(filename, marshalled, os.ModePerm)
 }
 
 func scanInput(prompt string) string {
