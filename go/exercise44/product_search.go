@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -15,8 +16,6 @@ type Product struct {
 }
 
 func main() {
-	scanner := bufio.NewScanner(os.Stdin)
-
 	file, err := os.ReadFile("./products.json")
 	if err != nil {
 		fmt.Println(err)
@@ -36,19 +35,47 @@ func main() {
 	}
 
 	for {
-		fmt.Print("What is the product name? ")
-		scanner.Scan()
-		productName := (scanner.Text())
+		productName := scanInput("What is the product name? ")
 
 		product, found := searchProduct(productName, products)
 		if !found {
 			fmt.Println("Sorry, that product was not found in our inventory.")
+			response := scanInput("Would you like to add product? (y/n) ")
+
+			if response == "y" {
+				product := newProduct()
+				product.Name = productName
+				products = append(products, product)
+				fmt.Println()
+			}
 			continue
 		}
 
 		displayProduct(product)
 		break
 	}
+}
+
+func newProduct() Product {
+	value := scanInput("Enter product price: ")
+	price, _ := strconv.ParseFloat(value, 64)
+
+	value = scanInput("Enter product quantity: ")
+	quantity, _ := strconv.Atoi(value)
+
+	return Product{
+		Price:    price,
+		Quantity: quantity,
+	}
+}
+
+func scanInput(prompt string) string {
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print(prompt)
+	scanner.Scan()
+
+	return strings.TrimSpace(scanner.Text())
 }
 
 func searchProduct(name string, products []Product) (Product, bool) {
