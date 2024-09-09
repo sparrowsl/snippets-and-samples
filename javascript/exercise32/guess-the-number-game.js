@@ -1,6 +1,6 @@
 import { input } from "pynput";
 
-const difficulty = Object.freeze({ 1: 10, 2: 100, 3: 1_000 });
+const difficulty = { 1: 10, 2: 100, 3: 1_000 };
 let guessCount = 0;
 
 console.log("Let's play Guess the Number.");
