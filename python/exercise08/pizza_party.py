@@ -13,7 +13,6 @@ except ValueError:
     exit(0)
 
 leftovers = people % pizzas
-print(
-    f"{people} people with {pizzas} pizzas\nEach person gets {(people / pizzas) / 2} pieces of pizza."
-)
+print(f"{people} people with {pizzas} pizzas")
+print(f"Each person gets {(people / pizzas) / 2} pieces of pizza.")
 print(f"There are {leftovers} leftovers pieces.")

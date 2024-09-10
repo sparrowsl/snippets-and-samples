@@ -5,7 +5,7 @@ const first = await input("Enter the first string: ");
 const second = await input("Enter the second string: ");
 
 if (isAnagram(first, second)) {
-  console.log(`"${first}" and "${second}" are anagrams.`);
+	console.log(`"${first}" and "${second}" are anagrams.`);
 }
 
 /**
@@ -13,15 +13,15 @@ if (isAnagram(first, second)) {
  * @param {string} second
  */
 function isAnagram(first, second) {
-  if (first.length !== second.length) {
-    return false;
-  }
+	if (first.length !== second.length) {
+		return false;
+	}
 
-  for (const letter of first) {
-    if (!second.includes(letter)) {
-      return false;
-    }
-  }
+	for (const letter of first) {
+		if (!second.includes(letter)) {
+			return false;
+		}
+	}
 
-  return true;
+	return true;
 }

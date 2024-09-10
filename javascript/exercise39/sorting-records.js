@@ -10,12 +10,12 @@ db.close(); // close db
 rows.sort((a, b) => a.last_name.localeCompare(b.last_name));
 
 console.log(
-  `${"Name".padEnd(20)} | ${"Position".padEnd(20)} | Separation Date`,
+	`${"Name".padEnd(20)} | ${"Position".padEnd(20)} | Separation Date`,
 );
 console.log("-".repeat(60));
 for (const row of rows) {
-  const fullname = `${row.first_name} ${row.last_name}`;
-  console.log(
-    `${fullname.padEnd(20)} | ${row.position.padEnd(20)} | ${row.date || ""}`,
-  );
+	const fullname = `${row.first_name} ${row.last_name}`;
+	console.log(
+		`${fullname.padEnd(20)} | ${row.position.padEnd(20)} | ${row.date || ""}`,
+	);
 }

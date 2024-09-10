@@ -1,6 +1,6 @@
 {
-  "dependencies": {
-    "pynput": "^0.2.3"
-  },
-  "type": "module"
+	"dependencies": {
+		"pynput": "^0.2.3"
+	},
+	"type": "module"
 }

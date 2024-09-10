@@ -11,14 +11,14 @@ const secret = Math.ceil(Math.random() * difficulty[level]);
 let guess = await input("I have my number. What's your guess? ");
 
 while (true) {
-  guessCount += 1;
+	guessCount += 1;
 
-  if (guess > secret) {
-    guess = await input("Too high. Guess again: ");
-  } else if (guess < secret) {
-    guess = await input("Too low. Guess again: ");
-  } else {
-    console.log(`You got it in ${guessCount} guesses!`);
-    break;
-  }
+	if (guess > secret) {
+		guess = await input("Too high. Guess again: ");
+	} else if (guess < secret) {
+		guess = await input("Too low. Guess again: ");
+	} else {
+		console.log(`You got it in ${guessCount} guesses!`);
+		break;
+	}
 }
