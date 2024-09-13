@@ -24,7 +24,7 @@ func main() {
 	words := strings.Fields(string(file))
 
 	for _, word := range words {
-		trimmed := strings.Trim(word, ",;:_[]?!@\"'.—")
+		trimmed := strings.Trim(word, ",;:_[]?!@\"'.—”“’)(&*%$#-")
 		store[trimmed]++
 	}
 
@@ -33,8 +33,10 @@ func main() {
 
 		page.Execute(response, struct {
 			Title string
+			Data  map[string]int
 		}{
-			Title: "A chart of word counts",
+			Title: "Word Frequency greater than 10",
+			Data:  store,
 		})
 	})
 
@@ -48,8 +50,4 @@ func displayGraph(data map[string]int) {
 	for key, value := range data {
 		fmt.Printf("%s: %s\n", key, strings.Repeat("*", value))
 	}
-}
-
-func renderTemplate(name string) {
-
 }

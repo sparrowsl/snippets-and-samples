@@ -4,20 +4,44 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Word Frequency Finder Chart</title>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
-      integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-      type="module"
-    ></script>
-  </head>
-  <body>
-    <h1>{{ .Title }}</h1>
+    <style>
+      * {
+        font-family: "Arial", "sans-serif";
+      }
 
+      body {
+        position: relative;
+      }
+
+      #chart-ctx {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section id="wrapper">
+      <canvas id="chart-ctx"></canvas>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script>
-      console.log("{{.}}");
-      console.log("{{.Title}}");
+      const filtered = Object.entries({{ .Data }}).filter(([_, value]) => value > 10)
+      const data = Object.fromEntries(filtered)
+
+      const chart = new Chart(document.getElementById("chart-ctx"), {
+        type: "bar",
+        data: {
+          labels: Object.keys(data),
+          datasets: [
+            {
+              data: Object.values(data),
+            },
+          ],
+        },
+      });
     </script>
   </body>
 </html>
