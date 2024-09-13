@@ -24,8 +24,8 @@ func main() {
 	words := strings.Fields(string(file))
 
 	for _, word := range words {
-		trimmed := strings.Trim(word, ",;:_[]?!@\"'.—”“’)(&*%$#-")
-		store[trimmed]++
+		trimmed := strings.Trim(word, ",;:_[]?!@\"'.—”“’)(&*%$#-|I")
+		store[strings.ToLower(trimmed)]++
 	}
 
 	server.HandleFunc("/", func(response http.ResponseWriter, request *http.Request) {
@@ -35,19 +35,10 @@ func main() {
 			Title string
 			Data  map[string]int
 		}{
-			Title: "Word Frequency greater than 10",
+			Title: "Word Frequency Counter",
 			Data:  store,
 		})
 	})
 
-	// fmt.Println(store)
-	// displayGraph(store)
-
 	http.ListenAndServe(":5000", server)
-}
-
-func displayGraph(data map[string]int) {
-	for key, value := range data {
-		fmt.Printf("%s: %s\n", key, strings.Repeat("*", value))
-	}
 }
