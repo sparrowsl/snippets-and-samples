@@ -1,5 +1,4 @@
-import os
-
+from pathlib import Path
 
 template_data = """
 <!DOCTYPE html>
@@ -22,29 +21,19 @@ js_folder = input("Do you want a folder for JavaScript? ")
 css_folder = input("Do you want a folder for CSS? ")
 
 
-template_data = template_data.replace("{{sitename}}", site_name)
-template_data = template_data.replace("{{author}}", author)
-
-if not os.path.exists(f"./{site_name}"):
-    os.mkdir(f"./{site_name}")
-    print(f"Created ./{site_name}")
-else:
-    print(f"./{site_name} already exists")
-
+Path(f"./{site_name}").mkdir(parents=True, exist_ok=True)
 with open(f"./{site_name}/index.html", "w") as file:
+    template_data = template_data.replace("{{sitename}}", site_name)
+    template_data = template_data.replace("{{author}}", author)
+
     file.write(template_data)
+    print(f"Created ./{site_name}")
+    print(f"Created ./{site_name}/index.html")
 
 if js_folder.strip() == "y":
-    if not os.path.exists(f"./{site_name}/js"):
-        os.mkdir(f"./{site_name}/js")
-        print(f"Created ./{site_name}/js")
-    else:
-        print(f"./{site_name}/js already exists")
-
+    Path(f"./{site_name}/js").mkdir(parents=True, exist_ok=True)
+    print(f"Created ./{site_name}/js")
 
 if css_folder.strip() == "y":
-    if not os.path.exists(f"./{site_name}/css"):
-        os.mkdir(f"./{site_name}/css")
-        print(f"Created ./{site_name}/css")
-    else:
-        print(f"./{site_name}/css already exists")
+    Path(f"./{site_name}/css").mkdir(parents=True, exist_ok=True)
+    print(f"Created ./{site_name}/css")
