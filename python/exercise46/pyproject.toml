@@ -1,0 +1,9 @@
+[project]
+name = "exercise46"
+version = "0.0.1"
+description = "Word Frequency Finder"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "flask>=3.0.3",
+]
