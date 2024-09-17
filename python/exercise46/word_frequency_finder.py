@@ -1,6 +1,7 @@
-from pathlib import Path
+from flask import Flask
 
-filepath = Path("./words.txt")
+app = Flask(__name__)
+
 store: dict[str, int] = dict()
 
 
@@ -9,7 +10,7 @@ def count_words(words: list[str]):
         store[word] = words.count(word)
 
 
-with open(filepath) as file:
+with open("./words.txt") as file:
     contents = file.read().replace("\n", " ").strip()
 
     stripped = contents.translate(
@@ -18,7 +19,8 @@ with open(filepath) as file:
     # stripped = contents.strip(",;:_[]?!@\"'.—”“’)(&*%$#-|I\r\n")
     splitted = stripped.split(" ")
 
-count_words(splitted)
 
-for key, value in store.items():
-    print(f"{key}: {"*" * value}")
+@app.get("/")
+def index():
+    count_words(splitted)
+    return "<h1>Hello again Flask!!</h1>"
