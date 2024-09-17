@@ -1,20 +1,20 @@
-items: dict = {}
+items: list[dict[str, float | int]] = list()
 price = 0.0
 quantity = 0
 
-for i in range(3):
-    price = float(input(f"Enter the price of item {i + 1}: "))
-    quantity = int(input(f"Enter the quantity of item {i + 1}: "))
+for i in range(1, 4):
+    price = float(input(f"Enter the price of item {i}: "))
+    quantity = int(input(f"Enter the quantity of item {i}: "))
 
-    items[i] = {"price": price, "quantity": float(quantity)}
+    items.append({"price": price, "quantity": quantity})
 
-print(items)
 
 sub_total = 0.0
 tax_rate = 5.5
 
-for key in items.keys():
-    sub_total += items[key]["price"] * items[key]["quantity"]
+
+for item in items:
+    sub_total += item["price"] * item["quantity"]
 
 tax = (tax_rate / 100) * sub_total
 print(f"Subtotal: ${sub_total:.2f}")
