@@ -1,4 +1,5 @@
-from pathlib import Path
+import pathlib
+import zipfile
 
 template_data = """
 <!DOCTYPE html>
@@ -15,25 +16,36 @@ template_data = """
 """
 
 
-site_name = input("Site name: ")
-author = input("Author: ")
-js_folder = input("Do you want a folder for JavaScript? ")
-css_folder = input("Do you want a folder for CSS? ")
+def zip_dir(filename: str):
+    current_path = pathlib.Path(filename)
+
+    with zipfile.ZipFile(f"{filename}.zip", "w", zipfile.ZIP_DEFLATED) as zip_file:
+        for entry in current_path.rglob("*"):
+            zip_file.write(entry, entry.relative_to(current_path))
 
 
-Path(f"./{site_name}").mkdir(parents=True, exist_ok=True)
+def create_dir(pathname: str):
+    pathlib.Path(f"./{pathname}").mkdir(parents=True, exist_ok=True)
+    print(f"Created ./{pathname}")
+
+
+site_name = input("Site name: ").strip()
+author = input("Author: ").strip()
+js_folder = input("Do you want a folder for JavaScript? ").strip()
+css_folder = input("Do you want a folder for CSS? ").strip()
+
+create_dir(site_name)
 with open(f"./{site_name}/index.html", "w") as file:
     template_data = template_data.replace("{{sitename}}", site_name)
     template_data = template_data.replace("{{author}}", author)
 
     file.write(template_data)
-    print(f"Created ./{site_name}")
     print(f"Created ./{site_name}/index.html")
 
-if js_folder.strip() == "y":
-    Path(f"./{site_name}/js").mkdir(parents=True, exist_ok=True)
-    print(f"Created ./{site_name}/js")
+if js_folder == "y":
+    create_dir(f"{site_name}/js")
 
-if css_folder.strip() == "y":
-    Path(f"./{site_name}/css").mkdir(parents=True, exist_ok=True)
-    print(f"Created ./{site_name}/css")
+if css_folder == "y":
+    create_dir(f"{site_name}/css")
+
+zip_dir(site_name)
