@@ -4,8 +4,56 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Word Frequency Chart</title>
+    <style>
+      * {
+        font-family: "Arial", "sans-serif";
+      }
+
+      body {
+        position: relative;
+      }
+
+      #chart-ctx {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    </style>
   </head>
   <body>
-    <h1>Hello again Flask!! {{name}}</h1>
+    <section id="wrapper">
+      <canvas id="chart-ctx"></canvas>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script>
+      let filtered = Object.entries({{ data | safe }})
+
+      if(filtered.length > 50){
+        filtered = filtered.filter(([_, value]) => value > 10)
+      }
+
+      const data = Object.fromEntries(filtered)
+
+      const chart = new Chart(document.getElementById("chart-ctx"), {
+        type: "bar",
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text: "{{ title }}"
+            }
+          }
+        },
+        data: {
+          labels: Object.keys(data),
+          datasets: [
+            {
+              data: Object.values(data),
+            },
+          ],
+        },
+      });
+    </script>
   </body>
 </html>

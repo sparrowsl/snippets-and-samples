@@ -8,14 +8,12 @@ import (
 	"strings"
 )
 
-const inputFile = "./macbeth.txt"
-
 var store = make(map[string]int)
 
 func main() {
 	server := http.NewServeMux()
 
-	file, err := os.ReadFile(inputFile)
+	file, err := os.ReadFile("./macbeth.txt")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -25,7 +23,7 @@ func main() {
 
 	for _, word := range words {
 		trimmed := strings.Trim(word, ",;:_[]?!@\"'.—”“’)(&*%$#-|I")
-		store[strings.ToLower(trimmed)]++
+		store[strings.ToLower(trimmed)] += 1
 	}
 
 	server.HandleFunc("/", func(response http.ResponseWriter, request *http.Request) {

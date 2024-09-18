@@ -10,7 +10,7 @@ def count_words(words: list[str]):
         store[word] = words.count(word)
 
 
-with open("./words.txt") as file:
+with open("./macbeth.txt") as file:
     contents = file.read().replace("\n", " ").strip()
 
     stripped = contents.translate(
@@ -23,4 +23,4 @@ with open("./words.txt") as file:
 @app.get("/")
 def index():
     count_words(splitted)
-    return render_template("index.html", name="Test")
+    return render_template("index.html", title="Word Frequency Counter", data=store)
