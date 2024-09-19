@@ -11,6 +11,7 @@ int main(void) {
   // printf("%d - %d\n\n", digits / 10000, digits % 10);
   // printf("%d - %d\n\n", digits / 1000 % 10, digits % 100 / 10);
   // printf("%d - %d\n\n", digits / 100 % 10, digits % 1000 / 100);
+  // printf("%d - %d\n\n", digits / 10000, digits % 10);
 
   if (digits / 10000 != digits % 10) {
     printf("%d is not a palindrome\n", digits);
