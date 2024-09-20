@@ -12,11 +12,12 @@ const search = await input("Enter a search string: ");
  * date: string
  * }] rows */
 const rows = db
-	.prepare("SELECT * FROM employees WHERE first_name like ?")
-	.all(`${search}%`);
-db.close();
-
-// console.log(rows)
+	.prepare(`SELECT * FROM employees 
+            WHERE first_name like ? 
+            OR last_name like ? 
+            OR position like ?`)
+	.all(`${search}%`, `${search}%`, `${search}%`);
+db.close(); // close db after accessing
 
 console.log(
 	`${"Name".padEnd(20)} | ${"Position".padEnd(20)} | Separation Date`,
