@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "better-sqlite3": "^11.3.0"
+    "better-sqlite3": "^11.3.0",
+    "pynput": "^0.3.1"
   },
   "type": "module"
 }
