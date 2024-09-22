@@ -1,0 +1,6 @@
+{
+	"type": "module",
+	"dependencies": {
+		"pynput": "^0.3.1"
+	}
+}
