@@ -1,4 +1,8 @@
 import fs from "node:fs";
+import { Hono } from "hono";
+import { serve } from "@hono/node-server";
+
+const app = new Hono();
 
 /** @type {string} contents */
 const contents = fs.readFileSync("./macbeth.txt", "utf8").trim();
@@ -19,3 +23,9 @@ for (const word of splitted) {
 }
 
 console.log(Object.fromEntries(store));
+
+app.get("/", (c) => {
+	return c.render("<h1>Hello word finder!!</h1>");
+});
+
+serve({ fetch: app.fetch, port: 5000 });

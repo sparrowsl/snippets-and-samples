@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "dev": "node --watch word-frequency-finder.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.1",
+    "hono": "^4.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17"
+  },
+  "type": "module"
+}
