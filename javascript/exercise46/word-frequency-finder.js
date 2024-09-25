@@ -1,10 +1,9 @@
 import fs from "node:fs";
-import { Hono } from "hono";
 import { serve } from "@hono/node-server";
+import { Hono } from "hono";
 
 const app = new Hono();
 
-/** @type {string} contents */
 const contents = fs.readFileSync("./macbeth.txt", "utf8").trim();
 
 /** @type {Map<string, number>} store */
