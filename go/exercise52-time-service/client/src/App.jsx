@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { createSignal } from "solid-js";
 
 export default function App() {
@@ -18,7 +19,9 @@ export default function App() {
 					get current time
 				</button>
 
-				<p>Current time: {time() || "N/A"}</p>
+				<p>
+					The current time is {dayjs(time()).format("HH:mm:ss UTC MMMM d YYYY")}
+				</p>
 			</div>
 		</>
 	);
