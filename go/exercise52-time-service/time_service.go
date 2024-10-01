@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"time"
+
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -21,5 +23,6 @@ func main() {
 		w.Write(data)
 	})
 
-	http.ListenAndServe(":5000", mux)
+	handler := cors.Default().Handler(mux)
+	http.ListenAndServe(":5000", handler)
 }
