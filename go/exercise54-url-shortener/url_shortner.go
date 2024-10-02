@@ -9,6 +9,14 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
+type URL struct {
+	Id       string `json:"id"`
+	ShortURL string `json:"short_url"`
+	LongURL  string `json:"long_url"`
+}
+
+var db = make([]URL, 0)
+
 func main() {
 	router := chi.NewRouter()
 
@@ -16,17 +24,17 @@ func main() {
 	router.Use(middleware.Recoverer)
 	router.Use(middleware.StripSlashes)
 
-	router.Get("/", index)
-	router.Post("/generate", generateURL)
+	router.Get("/urls", allURLs)
+	router.Post("/urls", createURL)
 
 	http.ListenAndServe(":5000", router)
 }
 
-func index(writer http.ResponseWriter, request *http.Request) {
+func allURLs(writer http.ResponseWriter, request *http.Request) {
 	toJSON(writer, http.StatusOK, map[string]any{"message": "Hello World"})
 }
 
-func generateURL(writer http.ResponseWriter, request *http.Request) {
+func createURL(writer http.ResponseWriter, request *http.Request) {
 	type Payload struct {
 		LongURL string `json:"url"`
 	}
@@ -40,7 +48,22 @@ func generateURL(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	fmt.Println(payload)
+	u := URL{
+		Id:       fmt.Sprintf("%d", len(db)+1),
+		LongURL:  payload.LongURL,
+		ShortURL: generateShortURL(0),
+	}
+
+	db = append(db, u)
+	toJSON(writer, http.StatusOK, map[string]any{"url": u})
+}
+
+func generateShortURL(length int) string {
+	if length == 0 {
+		length = 6
+	}
+
+	return fmt.Sprintf("abc12300%d", len(db))
 }
 
 func toJSON(writer http.ResponseWriter, status int, data map[string]any) error {
