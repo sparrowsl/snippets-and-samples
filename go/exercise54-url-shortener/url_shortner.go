@@ -1,26 +1,38 @@
 package main
 
 import (
+	"database/sql"
+	"fmt"
 	"net/http"
 	"time"
 
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
+	_ "modernc.org/sqlite"
 )
 
+type application struct {
+	db *sql.DB
+}
+
 func main() {
-	router := chi.NewRouter()
+	db, err := sql.Open("sqlite", "./breve.db")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer db.Close()
 
-	router.Use(middleware.Logger)
-	router.Use(middleware.Recoverer)
-	router.Use(middleware.StripSlashes)
+	if err := db.Ping(); err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("Connected to db successfully")
 
-	router.Get("/urls", allURLs)
-	router.Get("/urls/{id}", getOneURL)
-	router.Post("/urls", createURL)
+	app := &application{
+		db: db,
+	}
 
 	serv := http.Server{
-		Handler:     router,
+		Handler:     app.routes(),
 		Addr:        ":5000",
 		ReadTimeout: time.Second * 5,
 	}
