@@ -20,7 +20,7 @@ func (q *Queries) AllURLs(ctx context.Context) ([]Url, error) {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Url
+	items := []Url{}
 	for rows.Next() {
 		var i Url
 		if err := rows.Scan(&i.ID, &i.ShortUrl, &i.LongUrl); err != nil {

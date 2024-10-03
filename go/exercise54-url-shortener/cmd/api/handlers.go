@@ -1,10 +1,13 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
+	"breve/internal/database"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -17,7 +20,16 @@ type URL struct {
 var db = make([]URL, 0)
 
 func (app *application) allURLs(writer http.ResponseWriter, request *http.Request) {
-	toJSON(writer, http.StatusOK, map[string]any{"urls": db})
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	defer cancel()
+
+	urls, _ := app.db.AllURLs(ctx)
+
+	if len(urls) == 0 {
+		urls = []database.Url{}
+	}
+
+	toJSON(writer, http.StatusOK, map[string]any{"urls": urls})
 }
 
 func (app *application) getOneURL(writer http.ResponseWriter, request *http.Request) {

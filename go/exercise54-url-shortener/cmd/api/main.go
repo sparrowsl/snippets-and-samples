@@ -6,11 +6,12 @@ import (
 	"net/http"
 	"time"
 
+	"breve/internal/database"
 	_ "modernc.org/sqlite"
 )
 
 type application struct {
-	db *sql.DB
+	db *database.Queries
 }
 
 func main() {
@@ -28,7 +29,7 @@ func main() {
 	fmt.Println("Connected to db successfully")
 
 	app := &application{
-		db: db,
+		db: database.New(db),
 	}
 
 	serv := http.Server{
