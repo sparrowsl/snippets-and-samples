@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -13,8 +14,6 @@ type URL struct {
 	LongURL  string `json:"long_url"`
 }
 
-var db = make([]URL, 0)
-
 func main() {
 	router := chi.NewRouter()
 
@@ -23,7 +22,14 @@ func main() {
 	router.Use(middleware.StripSlashes)
 
 	router.Get("/urls", allURLs)
+	router.Get("/urls/{id}", getOneURL)
 	router.Post("/urls", createURL)
 
-	http.ListenAndServe(":5000", router)
+	serv := http.Server{
+		Handler:     router,
+		Addr:        ":5000",
+		ReadTimeout: time.Second * 5,
+	}
+
+	serv.ListenAndServe()
 }
