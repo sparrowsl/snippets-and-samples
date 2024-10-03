@@ -8,6 +8,12 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+type URL struct {
+	Id       string `json:"id"`
+	ShortURL string `json:"short_url"`
+	LongURL  string `json:"long_url"`
+}
+
 var db = make([]URL, 0)
 
 func allURLs(writer http.ResponseWriter, request *http.Request) {

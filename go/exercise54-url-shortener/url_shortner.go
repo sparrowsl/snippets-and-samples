@@ -8,12 +8,6 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-type URL struct {
-	Id       string `json:"id"`
-	ShortURL string `json:"short_url"`
-	LongURL  string `json:"long_url"`
-}
-
 func main() {
 	router := chi.NewRouter()
 
