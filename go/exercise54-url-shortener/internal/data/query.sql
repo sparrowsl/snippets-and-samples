@@ -3,7 +3,7 @@ SELECT * FROM urls
 WHERE id = ? LIMIT 1;
 
 -- name: AllURLs :many
-SELECT * FROM authons
+SELECT * FROM urls
 ORDER BY name;
 
 -- name: CreateURL :one
@@ -13,7 +13,7 @@ RETURNING *;
 
 -- name: UpdateURL :exec
 UPDATE urls
-set short_url = ?, long_url = ?
+SET short_url = ?, long_url = ?
 WHERE id = ?
 RETURNING *;
 
