@@ -16,11 +16,11 @@ type URL struct {
 
 var db = make([]URL, 0)
 
-func allURLs(writer http.ResponseWriter, request *http.Request) {
+func (app *application) allURLs(writer http.ResponseWriter, request *http.Request) {
 	toJSON(writer, http.StatusOK, map[string]any{"urls": db})
 }
 
-func getOneURL(writer http.ResponseWriter, request *http.Request) {
+func (app *application) getOneURL(writer http.ResponseWriter, request *http.Request) {
 	paramId := chi.URLParam(request, "id")
 
 	// search for the URL in db
@@ -34,7 +34,7 @@ func getOneURL(writer http.ResponseWriter, request *http.Request) {
 	toJSON(writer, http.StatusNotFound, nil)
 }
 
-func createURL(writer http.ResponseWriter, request *http.Request) {
+func (app *application) createURL(writer http.ResponseWriter, request *http.Request) {
 	decoder := json.NewDecoder(request.Body)
 	decoder.DisallowUnknownFields()
 

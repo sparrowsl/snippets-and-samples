@@ -14,9 +14,9 @@ func (app *application) routes() http.Handler {
 	router.Use(middleware.Recoverer)
 	router.Use(middleware.StripSlashes)
 
-	router.Get("/urls", allURLs)
-	router.Get("/urls/{id}", getOneURL)
-	router.Post("/urls", createURL)
+	router.Get("/urls", app.allURLs)
+	router.Get("/urls/{id}", app.getOneURL)
+	router.Post("/urls", app.createURL)
 
 	return router
 }
