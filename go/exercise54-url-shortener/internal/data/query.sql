@@ -1,10 +1,10 @@
--- name: GetURL :one
+-- name: GetOneURL :one
 SELECT * FROM urls
 WHERE id = ? LIMIT 1;
 
 -- name: AllURLs :many
 SELECT * FROM urls
-ORDER BY name;
+ORDER BY id;
 
 -- name: CreateURL :one
 INSERT INTO urls (short_url, long_url) 

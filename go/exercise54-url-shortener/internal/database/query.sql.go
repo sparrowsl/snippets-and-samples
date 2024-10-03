@@ -11,7 +11,7 @@ import (
 
 const allURLs = `-- name: AllURLs :many
 SELECT id, short_url, long_url FROM urls
-ORDER BY name
+ORDER BY id
 `
 
 func (q *Queries) AllURLs(ctx context.Context) ([]Url, error) {
@@ -65,13 +65,13 @@ func (q *Queries) DeleteURL(ctx context.Context, id int64) error {
 	return err
 }
 
-const getURL = `-- name: GetURL :one
+const getOneURL = `-- name: GetOneURL :one
 SELECT id, short_url, long_url FROM urls
 WHERE id = ? LIMIT 1
 `
 
-func (q *Queries) GetURL(ctx context.Context, id int64) (Url, error) {
-	row := q.db.QueryRowContext(ctx, getURL, id)
+func (q *Queries) GetOneURL(ctx context.Context, id int64) (Url, error) {
+	row := q.db.QueryRowContext(ctx, getOneURL, id)
 	var i Url
 	err := row.Scan(&i.ID, &i.ShortUrl, &i.LongUrl)
 	return i, err
