@@ -70,7 +70,7 @@ func (app *application) createURL(writer http.ResponseWriter, request *http.Requ
 	u := URL{
 		Id:       fmt.Sprintf("%d", len(db)+1),
 		LongURL:  payload.LongURL,
-		ShortURL: generateShortURL(0),
+		ShortURL: generateShortURL(8),
 	}
 
 	db = append(db, u)
