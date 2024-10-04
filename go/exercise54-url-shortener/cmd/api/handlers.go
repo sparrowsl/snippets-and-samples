@@ -17,8 +17,6 @@ type URL struct {
 	LongURL  string `json:"long_url"`
 }
 
-var db = make([]URL, 0)
-
 func (app *application) allURLs(writer http.ResponseWriter, request *http.Request) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
