@@ -3,13 +3,11 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 	"time"
 
 	"breve/internal/database"
-
 	"github.com/go-chi/chi/v5"
 )
 
@@ -67,12 +65,17 @@ func (app *application) createURL(writer http.ResponseWriter, request *http.Requ
 		return
 	}
 
-	u := URL{
-		Id:       fmt.Sprintf("%d", len(db)+1),
-		LongURL:  payload.LongURL,
-		ShortURL: generateShortURL(8),
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	defer cancel()
+
+	url, err := app.db.CreateURL(ctx, database.CreateURLParams{
+		ShortUrl: generateShortURL(),
+		LongUrl:  payload.LongURL,
+	})
+	if err != nil {
+		toJSON(writer, http.StatusInternalServerError, map[string]any{"error": err.Error()})
+		return
 	}
 
-	db = append(db, u)
-	toJSON(writer, http.StatusOK, map[string]any{"url": u})
+	toJSON(writer, http.StatusOK, map[string]any{"url": url})
 }

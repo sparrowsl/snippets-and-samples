@@ -6,14 +6,11 @@ import (
 	"net/http"
 )
 
-func generateShortURL(length int) string {
+// Generates a short random URL with a default length of 8 characters.
+func generateShortURL() string {
 	var randomRunes = []rune("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_")
 
-	if (length) <= 0 {
-		length = 8
-	}
-
-	str := make([]rune, length)
+	str := make([]rune, 8)
 
 	for i := range str {
 		str[i] = randomRunes[rand.Intn(len(randomRunes))]
@@ -22,6 +19,7 @@ func generateShortURL(length int) string {
 	return string(str)
 }
 
+// Sends a JSON response back to the client.
 func toJSON(writer http.ResponseWriter, status int, data map[string]any) error {
 	result, err := json.Marshal(data)
 	if err != nil {
