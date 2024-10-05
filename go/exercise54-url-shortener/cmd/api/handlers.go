@@ -17,8 +17,8 @@ type URL struct {
 	LongURL  string `json:"long_url"`
 }
 
-func (app *application) allURLs(writer http.ResponseWriter, request *http.Request) {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+func (app *application) getURLs(writer http.ResponseWriter, request *http.Request) {
+	ctx, cancel := context.WithTimeout(app.ctx, time.Second*5)
 	defer cancel()
 
 	urls, _ := app.db.AllURLs(ctx)
@@ -30,7 +30,7 @@ func (app *application) allURLs(writer http.ResponseWriter, request *http.Reques
 	toJSON(writer, http.StatusOK, map[string]any{"urls": urls})
 }
 
-func (app *application) getOneURL(writer http.ResponseWriter, request *http.Request) {
+func (app *application) getURL(writer http.ResponseWriter, request *http.Request) {
 	paramId := chi.URLParam(request, "id")
 	id, err := strconv.Atoi(paramId)
 	if err != nil {
@@ -38,7 +38,7 @@ func (app *application) getOneURL(writer http.ResponseWriter, request *http.Requ
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	ctx, cancel := context.WithTimeout(app.ctx, time.Second*5)
 	defer cancel()
 
 	url, err := app.db.GetOneURL(ctx, int64(id))
@@ -63,7 +63,7 @@ func (app *application) createURL(writer http.ResponseWriter, request *http.Requ
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	ctx, cancel := context.WithTimeout(app.ctx, time.Second*5)
 	defer cancel()
 
 	url, err := app.db.CreateURL(ctx, database.CreateURLParams{

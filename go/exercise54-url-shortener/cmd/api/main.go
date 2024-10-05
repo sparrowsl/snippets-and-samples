@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"net/http"
@@ -11,7 +12,8 @@ import (
 )
 
 type application struct {
-	db *database.Queries
+	db  *database.Queries
+	ctx context.Context
 }
 
 func main() {
@@ -29,7 +31,8 @@ func main() {
 	fmt.Println("Connected to db successfully")
 
 	app := &application{
-		db: database.New(db),
+		db:  database.New(db),
+		ctx: context.Background(),
 	}
 
 	serv := http.Server{

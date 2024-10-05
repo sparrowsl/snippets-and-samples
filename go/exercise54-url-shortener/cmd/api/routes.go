@@ -12,10 +12,11 @@ func (app *application) routes() http.Handler {
 
 	router.Use(middleware.Logger)
 	router.Use(middleware.Recoverer)
+	router.Use(middleware.CleanPath)
 	router.Use(middleware.StripSlashes)
 
-	router.Get("/urls", app.allURLs)
-	router.Get("/urls/{id}", app.getOneURL)
+	router.Get("/urls", app.getURLs)
+	router.Get("/urls/{id}", app.getURL)
 	router.Post("/urls", app.createURL)
 
 	return router
