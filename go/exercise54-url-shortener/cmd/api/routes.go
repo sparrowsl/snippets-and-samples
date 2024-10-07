@@ -6,6 +6,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 )
 
 func (app *application) routes() http.Handler {
@@ -15,6 +16,9 @@ func (app *application) routes() http.Handler {
 	router.Use(middleware.Recoverer)
 	router.Use(middleware.CleanPath)
 	router.Use(middleware.StripSlashes)
+	router.Use(cors.Handler(cors.Options{
+		AllowedOrigins: []string{"*"},
+	}))
 
 	router.Get("/urls", app.getURLs)
 	router.Get("/urls/{id}", app.getURL)
