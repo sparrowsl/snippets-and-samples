@@ -1,6 +1,14 @@
 import { For } from "solid-js";
 
 export default function App() {
+	const get_urls = async () => {
+		const res = await fetch("http://localhost:5000/urls");
+		const data = await res.json();
+		console.log(data);
+	};
+
+	get_urls();
+
 	return (
 		<>
 			<section class="max-w-5xl min-h-screen mx-auto bg-gray-50 py-5">
