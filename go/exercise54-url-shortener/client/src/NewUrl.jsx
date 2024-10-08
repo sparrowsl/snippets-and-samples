@@ -13,7 +13,7 @@ export default function NewUrl() {
 		await fetch("http://localhost:5000/urls", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ url }),
+			body: JSON.stringify({ url: url() }),
 		});
 	};
 

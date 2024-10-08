@@ -3,11 +3,14 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"breve/internal/database"
+
 	"github.com/go-chi/chi/v5"
 )
 
@@ -63,9 +66,16 @@ func (app *application) createURL(writer http.ResponseWriter, request *http.Requ
 		return
 	}
 
+	// validate if url is not empty
+	if strings.TrimSpace(payload.LongURL) == "" {
+		toJSON(writer, http.StatusBadRequest, map[string]any{"error": "url is required"})
+		return
+	}
+
 	ctx, cancel := context.WithTimeout(app.ctx, time.Second*5)
 	defer cancel()
 
+	fmt.Println(payload)
 	url, err := app.db.CreateURL(ctx, database.CreateURLParams{
 		ShortUrl: generateShortURL(),
 		LongUrl:  payload.LongURL,
