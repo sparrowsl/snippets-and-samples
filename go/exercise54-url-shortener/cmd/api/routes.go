@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -17,7 +18,11 @@ func (app *application) routes() http.Handler {
 	router.Use(middleware.CleanPath)
 	router.Use(middleware.StripSlashes)
 	router.Use(cors.Handler(cors.Options{
-		AllowedOrigins: []string{"*"},
+		AllowedOrigins:   []string{"*"},
+		AllowedHeaders:   []string{"Origin", "Content-Type", "Accept"},
+		AllowedMethods:   []string{"GET", "POST"},
+		AllowCredentials: false,
+		MaxAge:           int(time.Second * 5),
 	}))
 
 	router.Get("/urls", app.getURLs)

@@ -4,12 +4,10 @@ export default function App() {
 	const get_urls = async () => {
 		const res = await fetch("http://localhost:5000/urls");
 		const data = await res.json();
-		return data.urls
+		return data.urls;
 	};
 
-	const [data] = createResource(get_urls)
-
-
+	const [data] = createResource(get_urls);
 
 	return (
 		<>
@@ -37,12 +35,22 @@ function Card({ url }) {
 	return (
 		<>
 			<div class="bg-white shadow rounded p-3">
-				<h3>Short URL: &copy; {url.short_url}</h3>
-				<p class="text-sm">Long URL: &trade; {url.long_url}</p>
+				<h3 class="text-sm">
+					Short URL:{" "}
+					<span class="underline text-blue-500">{url.short_url}</span>
+				</h3>
+				<p class="text-sm">
+					Long URL: <span class="italic text-gray-500">{url.long_url}</span>
+				</p>
 
-				<a href="/" class="text-blue-800 block w-fit underline mt-5">
-					visit &rarr;
-				</a>
+				<div class="flex items-center justify-between mt-5">
+					<a href="/" class="text-blue-700 hover:underline">
+						stats &#8961;
+					</a>
+					<a href="/" class="text-blue-800 underline">
+						visit &#129146;
+					</a>
+				</div>
 			</div>
 		</>
 	);
