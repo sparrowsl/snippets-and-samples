@@ -1,13 +1,15 @@
-import { For } from "solid-js";
+import { createResource, For, Show } from "solid-js";
 
 export default function App() {
 	const get_urls = async () => {
 		const res = await fetch("http://localhost:5000/urls");
 		const data = await res.json();
-		console.log(data);
+		return data.urls
 	};
 
-	get_urls();
+	const [data] = createResource(get_urls)
+
+
 
 	return (
 		<>
@@ -16,9 +18,13 @@ export default function App() {
 					Breve - URL Shortner
 				</h1>
 
+				<Show when={data.loading}>
+					<p>loading urls....</p>
+				</Show>
+
 				<div class="grid grid-cols-3 gap-5 p-10">
-					<For each={Array.from({ length: 5 })}>
-						{<Card url={{ id: "", short_url: "short", long_url: "" }} />}
+					<For each={data()} fallback={<p>No urls yet!!</p>}>
+						{(url) => <Card url={url} />}
 					</For>
 				</div>
 			</section>
@@ -32,7 +38,7 @@ function Card({ url }) {
 		<>
 			<div class="bg-white shadow rounded p-3">
 				<h3>Short URL: &copy; {url.short_url}</h3>
-				<p>Long URL: &trade; {url.long_url}</p>
+				<p class="text-sm">Long URL: &trade; {url.long_url}</p>
 
 				<a href="/" class="text-blue-800 block w-fit underline mt-5">
 					visit &rarr;
