@@ -1,9 +1,9 @@
 import { createResource, createSignal, For, Show } from "solid-js";
 import NewUrl from "./NewUrl";
 
-export default function App() {
-	const [open, set_open] = createSignal(false);
+export const [open, set_open] = createSignal(false);
 
+export default function App() {
 	const get_urls = async () => {
 		const res = await fetch("http://localhost:5000/urls");
 		const data = await res.json();
@@ -71,7 +71,7 @@ function Card({ url }) {
 				</p>
 
 				<div class="flex items-center justify-between mt-5">
-					<a href="/" class="text-blue-700 hover:underline">
+					<a href={`/${url.id}/stats`} class="text-blue-700 hover:underline">
 						stats &#8961;
 					</a>
 					<a href="/" class="text-blue-800 underline">

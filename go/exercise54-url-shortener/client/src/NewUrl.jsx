@@ -1,4 +1,5 @@
 import { createSignal } from "solid-js";
+import { set_open } from "./App.jsx";
 
 export default function NewUrl() {
 	const [url, set_url] = createSignal();
@@ -20,7 +21,8 @@ export default function NewUrl() {
 		}
 
 		// reload window if success
-		window.location.reload();
+		//window.location.reload();
+		set_open(false);
 	};
 
 	return (
