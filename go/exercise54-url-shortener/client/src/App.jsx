@@ -1,4 +1,5 @@
 import { createResource, For, Show } from "solid-js";
+import NewUrl from "./NewUrl";
 
 export default function App() {
 	const get_urls = async () => {
@@ -26,6 +27,8 @@ export default function App() {
 					</For>
 				</div>
 			</section>
+
+			<NewUrl />
 		</>
 	);
 }
