@@ -1,5 +1,16 @@
 /** @param {{url: {id:string, short_url:string, long_url:string}}} url  */
 export default function URLCard({ url }) {
+  const updateVisitedThenRedirect = async (url) => {
+    const res = await fetch(`http://localhost:5000/urls/${url.short_url}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: ""
+    })
+    if (res.ok) {
+      window.location.href = url.long_url
+    }
+  }
+
   return (
     <>
       <div class="bg-white shadow rounded p-3">
@@ -16,9 +27,12 @@ export default function URLCard({ url }) {
           <a href={`/${url.short_url}/stats`} class="text-blue-700 hover:underline">
             stats &#8961;
           </a>
-          <a href={url.long_url} target="_blank" class="text-blue-800 underline" rel="noreferrer">
+          <button
+            class="text-blue-800 underline"
+            type="button"
+            onClick={() => updateVisitedThenRedirect(url)}>
             visit &#129146;
-          </a>
+          </button>
         </div>
       </div>
     </>

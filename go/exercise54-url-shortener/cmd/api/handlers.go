@@ -79,3 +79,25 @@ func (app *application) createURL(writer http.ResponseWriter, request *http.Requ
 
 	toJSON(writer, http.StatusOK, map[string]any{"url": url})
 }
+
+func (app *application) updateVisited(writer http.ResponseWriter, request *http.Request) {
+	paramId := chi.URLParam(request, "id")
+
+	ctx, cancel := context.WithTimeout(app.ctx, time.Second*5)
+	defer cancel()
+
+	url, err := app.db.GetOneURL(ctx, paramId)
+	if err != nil {
+		toJSON(writer, http.StatusNotFound, map[string]any{"error": err.Error()})
+		return
+	}
+
+	err = app.db.UpdateVisited(ctx, database.UpdateVisitedParams{
+		Visited:  url.Visited + 1,
+		ShortUrl: paramId,
+	})
+	if err != nil {
+		toJSON(writer, http.StatusInternalServerError, map[string]any{"error": err})
+		return
+	}
+}

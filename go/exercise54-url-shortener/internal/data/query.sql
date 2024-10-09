@@ -11,3 +11,8 @@ ORDER BY id DESC;
 INSERT INTO urls (short_url, long_url)
 VALUES (?, ?)
 RETURNING *;
+
+-- name: UpdateVisited :exec
+UPDATE urls
+SET visited = ?
+WHERE short_url = ?;

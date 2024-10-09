@@ -33,6 +33,10 @@ export default function URLStats() {
             Long URL:{" "}
             <span class="text-sm font-normal ml-4">{data()?.long_url}</span>
           </p>
+          <p class="font-semibold">
+            Visited:{" "}
+            <span class="text-sm font-normal ml-4">{data()?.visited}</span>
+          </p>
         </div>
       </section>
     </>

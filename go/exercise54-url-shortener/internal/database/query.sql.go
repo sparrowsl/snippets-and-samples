@@ -82,3 +82,19 @@ func (q *Queries) GetOneURL(ctx context.Context, shortUrl string) (Url, error) {
 	)
 	return i, err
 }
+
+const updateVisited = `-- name: UpdateVisited :exec
+UPDATE urls
+SET visited = ?
+WHERE short_url = ?
+`
+
+type UpdateVisitedParams struct {
+	Visited  int64  `db:"visited" json:"visited"`
+	ShortUrl string `db:"short_url" json:"short_url"`
+}
+
+func (q *Queries) UpdateVisited(ctx context.Context, arg UpdateVisitedParams) error {
+	_, err := q.db.ExecContext(ctx, updateVisited, arg.Visited, arg.ShortUrl)
+	return err
+}
