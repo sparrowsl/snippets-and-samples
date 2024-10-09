@@ -38,7 +38,7 @@ func (q *Queries) AllURLs(ctx context.Context) ([]Url, error) {
 }
 
 const createURL = `-- name: CreateURL :one
-INSERT INTO urls (short_url, long_url) 
+INSERT INTO urls (short_url, long_url)
 VALUES (?, ?)
 RETURNING id, short_url, long_url
 `
@@ -67,11 +67,12 @@ func (q *Queries) DeleteURL(ctx context.Context, id int64) error {
 
 const getOneURL = `-- name: GetOneURL :one
 SELECT id, short_url, long_url FROM urls
-WHERE id = ? LIMIT 1
+WHERE short_url = ?
+LIMIT 1
 `
 
-func (q *Queries) GetOneURL(ctx context.Context, id int64) (Url, error) {
-	row := q.db.QueryRowContext(ctx, getOneURL, id)
+func (q *Queries) GetOneURL(ctx context.Context, shortUrl string) (Url, error) {
+	row := q.db.QueryRowContext(ctx, getOneURL, shortUrl)
 	var i Url
 	err := row.Scan(&i.ID, &i.ShortUrl, &i.LongUrl)
 	return i, err

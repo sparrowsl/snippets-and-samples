@@ -13,7 +13,7 @@ export default function URLCard({ url }) {
         </p>
 
         <div class="flex items-center justify-between mt-5">
-          <a href={`/${url.id}/stats`} class="text-blue-700 hover:underline">
+          <a href={`/${url.short_url}/stats`} class="text-blue-700 hover:underline">
             stats &#8961;
           </a>
           <a href={url.long_url} target="_blank" class="text-blue-800 underline" rel="noreferrer">

@@ -4,11 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-	"strconv"
 	"strings"
 	"time"
 
 	"breve/internal/database"
+
 	"github.com/go-chi/chi/v5"
 )
 
@@ -33,16 +33,11 @@ func (app *application) getURLs(writer http.ResponseWriter, request *http.Reques
 
 func (app *application) getURL(writer http.ResponseWriter, request *http.Request) {
 	paramId := chi.URLParam(request, "id")
-	id, err := strconv.Atoi(paramId)
-	if err != nil {
-		toJSON(writer, http.StatusBadRequest, map[string]any{"error": "Invalid Id"})
-		return
-	}
 
 	ctx, cancel := context.WithTimeout(app.ctx, time.Second*5)
 	defer cancel()
 
-	url, err := app.db.GetOneURL(ctx, int64(id))
+	url, err := app.db.GetOneURL(ctx, paramId)
 	if err != nil {
 		toJSON(writer, http.StatusNotFound, map[string]any{"error": err.Error()})
 		return
