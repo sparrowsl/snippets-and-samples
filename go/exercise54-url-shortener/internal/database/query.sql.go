@@ -10,7 +10,7 @@ import (
 )
 
 const allURLs = `-- name: AllURLs :many
-SELECT id, short_url, long_url FROM urls
+SELECT id, short_url, long_url, visited FROM urls
 ORDER BY id DESC
 `
 
@@ -23,7 +23,12 @@ func (q *Queries) AllURLs(ctx context.Context) ([]Url, error) {
 	items := []Url{}
 	for rows.Next() {
 		var i Url
-		if err := rows.Scan(&i.ID, &i.ShortUrl, &i.LongUrl); err != nil {
+		if err := rows.Scan(
+			&i.ID,
+			&i.ShortUrl,
+			&i.LongUrl,
+			&i.Visited,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -40,7 +45,7 @@ func (q *Queries) AllURLs(ctx context.Context) ([]Url, error) {
 const createURL = `-- name: CreateURL :one
 INSERT INTO urls (short_url, long_url)
 VALUES (?, ?)
-RETURNING id, short_url, long_url
+RETURNING id, short_url, long_url, visited
 `
 
 type CreateURLParams struct {
@@ -51,12 +56,17 @@ type CreateURLParams struct {
 func (q *Queries) CreateURL(ctx context.Context, arg CreateURLParams) (Url, error) {
 	row := q.db.QueryRowContext(ctx, createURL, arg.ShortUrl, arg.LongUrl)
 	var i Url
-	err := row.Scan(&i.ID, &i.ShortUrl, &i.LongUrl)
+	err := row.Scan(
+		&i.ID,
+		&i.ShortUrl,
+		&i.LongUrl,
+		&i.Visited,
+	)
 	return i, err
 }
 
 const getOneURL = `-- name: GetOneURL :one
-SELECT id, short_url, long_url FROM urls
+SELECT id, short_url, long_url, visited FROM urls
 WHERE short_url = ?
 LIMIT 1
 `
@@ -64,6 +74,11 @@ LIMIT 1
 func (q *Queries) GetOneURL(ctx context.Context, shortUrl string) (Url, error) {
 	row := q.db.QueryRowContext(ctx, getOneURL, shortUrl)
 	var i Url
-	err := row.Scan(&i.ID, &i.ShortUrl, &i.LongUrl)
+	err := row.Scan(
+		&i.ID,
+		&i.ShortUrl,
+		&i.LongUrl,
+		&i.Visited,
+	)
 	return i, err
 }

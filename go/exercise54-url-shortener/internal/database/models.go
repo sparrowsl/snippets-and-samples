@@ -8,4 +8,5 @@ type Url struct {
 	ID       int64  `db:"id" json:"id"`
 	ShortUrl string `db:"short_url" json:"short_url"`
 	LongUrl  string `db:"long_url" json:"long_url"`
+	Visited  int64  `db:"visited" json:"visited"`
 }
