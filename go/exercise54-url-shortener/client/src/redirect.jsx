@@ -1,4 +1,4 @@
-import { redirect, useNavigate, useParams } from "@solidjs/router"
+import { useParams } from "@solidjs/router"
 
 export default function RedirectURL() {
   const params = useParams()

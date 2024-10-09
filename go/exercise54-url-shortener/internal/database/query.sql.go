@@ -11,7 +11,7 @@ import (
 
 const allURLs = `-- name: AllURLs :many
 SELECT id, short_url, long_url FROM urls
-ORDER BY id
+ORDER BY id DESC
 `
 
 func (q *Queries) AllURLs(ctx context.Context) ([]Url, error) {
@@ -55,16 +55,6 @@ func (q *Queries) CreateURL(ctx context.Context, arg CreateURLParams) (Url, erro
 	return i, err
 }
 
-const deleteURL = `-- name: DeleteURL :exec
-DELETE FROM urls
-WHERE id = ?
-`
-
-func (q *Queries) DeleteURL(ctx context.Context, id int64) error {
-	_, err := q.db.ExecContext(ctx, deleteURL, id)
-	return err
-}
-
 const getOneURL = `-- name: GetOneURL :one
 SELECT id, short_url, long_url FROM urls
 WHERE short_url = ?
@@ -76,22 +66,4 @@ func (q *Queries) GetOneURL(ctx context.Context, shortUrl string) (Url, error) {
 	var i Url
 	err := row.Scan(&i.ID, &i.ShortUrl, &i.LongUrl)
 	return i, err
-}
-
-const updateURL = `-- name: UpdateURL :exec
-UPDATE urls
-SET short_url = ?, long_url = ?
-WHERE id = ?
-RETURNING id, short_url, long_url
-`
-
-type UpdateURLParams struct {
-	ShortUrl string `db:"short_url" json:"short_url"`
-	LongUrl  string `db:"long_url" json:"long_url"`
-	ID       int64  `db:"id" json:"id"`
-}
-
-func (q *Queries) UpdateURL(ctx context.Context, arg UpdateURLParams) error {
-	_, err := q.db.ExecContext(ctx, updateURL, arg.ShortUrl, arg.LongUrl, arg.ID)
-	return err
 }

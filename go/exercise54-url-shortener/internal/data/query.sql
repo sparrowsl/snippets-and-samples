@@ -5,19 +5,9 @@ LIMIT 1;
 
 -- name: AllURLs :many
 SELECT * FROM urls
-ORDER BY id;
+ORDER BY id DESC;
 
 -- name: CreateURL :one
 INSERT INTO urls (short_url, long_url)
 VALUES (?, ?)
 RETURNING *;
-
--- name: UpdateURL :exec
-UPDATE urls
-SET short_url = ?, long_url = ?
-WHERE id = ?
-RETURNING *;
-
--- name: DeleteURL :exec
-DELETE FROM urls
-WHERE id = ?;
