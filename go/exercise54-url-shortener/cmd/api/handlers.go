@@ -3,14 +3,12 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
 
 	"breve/internal/database"
-
 	"github.com/go-chi/chi/v5"
 )
 
@@ -75,7 +73,6 @@ func (app *application) createURL(writer http.ResponseWriter, request *http.Requ
 	ctx, cancel := context.WithTimeout(app.ctx, time.Second*5)
 	defer cancel()
 
-	fmt.Println(payload)
 	url, err := app.db.CreateURL(ctx, database.CreateURLParams{
 		ShortUrl: generateShortURL(),
 		LongUrl:  payload.LongURL,
