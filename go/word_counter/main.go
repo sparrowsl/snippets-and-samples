@@ -12,7 +12,7 @@ import (
 func main() {
 	lines := flag.Bool("l", false, "Count lines")
 	byt := flag.Bool("b", false, "Count bytes")
-	filename := flag.String("f", "", "Count bytes|lines|words in the file")
+	filename := flag.String("f", "", "Count bytes | lines | words in the file")
 
 	flag.Parse() // parse all flags provided by user
 
