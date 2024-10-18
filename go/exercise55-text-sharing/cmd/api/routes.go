@@ -16,6 +16,7 @@ func (app *application) routes() http.Handler {
 	router.Use(middleware.StripSlashes)
 
 	router.Get("/", app.getAllSnippets)
+	router.Post("/", app.createSnippet)
 
 	return router
 }

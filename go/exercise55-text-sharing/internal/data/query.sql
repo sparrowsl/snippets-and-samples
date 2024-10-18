@@ -7,10 +7,10 @@
 SELECT * FROM snippets
 ORDER BY created_at DESC;
 
--- -- name: CreateURL :one
--- INSERT INTO urls (short_url, long_url)
--- VALUES (?, ?)
--- RETURNING *;
+-- name: CreateSnippet :one
+INSERT INTO snippets (slug, text)
+VALUES (?, ?)
+RETURNING *;
 
 -- -- name: UpdateVisited :exec
 -- UPDATE urls

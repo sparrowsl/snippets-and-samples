@@ -4,7 +4,13 @@
 
 package database
 
+import (
+	"time"
+)
+
 type Snippet struct {
-	ID   int64       `db:"id" json:"id"`
-	Text interface{} `db:"text" json:"text"`
+	ID        int64     `db:"id" json:"id"`
+	Text      string    `db:"text" json:"text"`
+	CreatedAt time.Time `db:"created_at" json:"created_at"`
+	Slug      string    `db:"slug" json:"slug"`
 }
