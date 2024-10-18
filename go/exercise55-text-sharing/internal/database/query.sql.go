@@ -33,15 +33,10 @@ func (q *Queries) CreateSnippet(ctx context.Context, arg CreateSnippetParams) (S
 }
 
 const getAllSnippets = `-- name: GetAllSnippets :many
-
 SELECT id, text, created_at, slug FROM snippets
 ORDER BY created_at DESC
 `
 
-// -- name: GetOneURL :one
-// SELECT * FROM urls
-// WHERE short_url = ?
-// LIMIT 1;
 func (q *Queries) GetAllSnippets(ctx context.Context) ([]Snippet, error) {
 	rows, err := q.db.QueryContext(ctx, getAllSnippets)
 	if err != nil {
@@ -68,4 +63,22 @@ func (q *Queries) GetAllSnippets(ctx context.Context) ([]Snippet, error) {
 		return nil, err
 	}
 	return items, nil
+}
+
+const getSnippet = `-- name: GetSnippet :one
+SELECT id, text, created_at, slug FROM snippets
+WHERE slug = ?
+LIMIT 1
+`
+
+func (q *Queries) GetSnippet(ctx context.Context, slug string) (Snippet, error) {
+	row := q.db.QueryRowContext(ctx, getSnippet, slug)
+	var i Snippet
+	err := row.Scan(
+		&i.ID,
+		&i.Text,
+		&i.CreatedAt,
+		&i.Slug,
+	)
+	return i, err
 }

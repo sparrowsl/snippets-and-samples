@@ -11,6 +11,8 @@ import (
 
 	"text-sharing/internal/database"
 	"text-sharing/internal/server"
+
+	"github.com/go-chi/chi/v5"
 )
 
 func (app *application) getAllSnippets(writer http.ResponseWriter, _ *http.Request) {
@@ -53,6 +55,21 @@ func (app application) createSnippet(writer http.ResponseWriter, request *http.R
 	})
 	if err != nil {
 		server.WriteJSON(writer, http.StatusInternalServerError, map[string]any{"error": err})
+		return
+	}
+
+	server.WriteJSON(writer, http.StatusOK, map[string]any{"snippet": snippet})
+}
+
+func (app *application) getSnippet(writer http.ResponseWriter, request *http.Request) {
+	slug := chi.URLParam(request, "slug")
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	defer cancel()
+
+	snippet, err := app.db.GetSnippet(ctx, slug)
+	if err != nil {
+		server.WriteJSON(writer, http.StatusInternalServerError, map[string]any{"error": err.Error()})
 		return
 	}
 

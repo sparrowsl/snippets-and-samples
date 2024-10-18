@@ -1,7 +1,7 @@
--- -- name: GetOneURL :one
--- SELECT * FROM urls
--- WHERE short_url = ?
--- LIMIT 1;
+-- name: GetSnippet :one
+SELECT * FROM snippets
+WHERE slug = ?
+LIMIT 1;
 
 -- name: GetAllSnippets :many
 SELECT * FROM snippets
