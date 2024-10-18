@@ -12,9 +12,11 @@ func Routes() http.Handler {
 
 	router.Use(middleware.Logger)
 	router.Use(middleware.Recoverer)
+	router.Use(middleware.CleanPath)
+	router.Use(middleware.StripSlashes)
 
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("This is fun"))
+		writeJSON(w, http.StatusOK, map[string]any{"message": "Hello from JSON helper!!"})
 	})
 
 	return router

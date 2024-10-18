@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"text_sharing/internal/server"
+	"text-sharing/internal/server"
 
 	_ "modernc.org/sqlite"
 )

@@ -1,4 +1,4 @@
-module text_sharing
+module text-sharing
 
 go 1.23.1
 
