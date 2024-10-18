@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func writeJSON(writer http.ResponseWriter, status int, value map[string]any) error {
+func WriteJSON(writer http.ResponseWriter, status int, value map[string]any) error {
 	marshalled, err := json.Marshal(value)
 	if err != nil {
 		return err

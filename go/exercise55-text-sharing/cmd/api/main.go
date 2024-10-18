@@ -7,13 +7,13 @@ import (
 	"net/http"
 	"time"
 
-	"text-sharing/internal/server"
+	"text-sharing/internal/database"
 
 	_ "modernc.org/sqlite"
 )
 
 type application struct {
-	routes http.Handler
+	db *database.Queries
 }
 
 func main() {
@@ -30,13 +30,17 @@ func main() {
 	}
 	fmt.Println("connected to db successfully...")
 
-	server := http.Server{
+	app := application{
+		db: database.New(db),
+	}
+
+	serv := http.Server{
 		Addr:        ":5000",
-		Handler:     server.Routes(),
+		Handler:     app.routes(),
 		ReadTimeout: time.Second * 5,
 	}
 
-	if err := server.ListenAndServe(); err != nil {
+	if err := serv.ListenAndServe(); err != nil {
 		log.Fatal(err)
 	}
 }
