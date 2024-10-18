@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -33,6 +34,8 @@ func (app application) createSnippet(writer http.ResponseWriter, request *http.R
 		server.WriteJSON(writer, http.StatusBadRequest, map[string]any{"error": err})
 		return
 	}
+
+	fmt.Println(input)
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()

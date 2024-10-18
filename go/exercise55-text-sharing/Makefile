@@ -13,3 +13,7 @@ migrate-up:
 .PHONY: migrate-down
 migrate-down:
 	goose -dir=migrations sqlite ./data-sharing.db down
+
+.PHONY: generate
+generate:
+	goose -dir=migrations create ${name} sql
