@@ -18,6 +18,7 @@ func (app *application) routes() http.Handler {
 	router.Get("/", app.getAllSnippets)
 	router.Get("/{slug}", app.getSnippet)
 	router.Post("/", app.createSnippet)
+	router.Patch("/{slug}", app.updateSnippet)
 
 	return router
 }

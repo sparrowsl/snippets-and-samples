@@ -12,7 +12,7 @@ INSERT INTO snippets (slug, text)
 VALUES (?, ?)
 RETURNING *;
 
--- -- name: UpdateVisited :exec
--- UPDATE urls
--- SET visited = ?
--- WHERE short_url = ?;
+-- name: UpdateSnippet :exec
+UPDATE snippets
+SET text = ?
+WHERE slug = ?;

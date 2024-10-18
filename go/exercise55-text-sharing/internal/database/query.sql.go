@@ -82,3 +82,19 @@ func (q *Queries) GetSnippet(ctx context.Context, slug string) (Snippet, error) 
 	)
 	return i, err
 }
+
+const updateSnippet = `-- name: UpdateSnippet :exec
+UPDATE snippets
+SET text = ?
+WHERE slug = ?
+`
+
+type UpdateSnippetParams struct {
+	Text string `db:"text" json:"text"`
+	Slug string `db:"slug" json:"slug"`
+}
+
+func (q *Queries) UpdateSnippet(ctx context.Context, arg UpdateSnippetParams) error {
+	_, err := q.db.ExecContext(ctx, updateSnippet, arg.Text, arg.Slug)
+	return err
+}
