@@ -1,13 +1,15 @@
-package main
+package api
 
 import (
 	"net/http"
+
+	"text-sharing/internal/api/handlers"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func (app *application) routes() http.Handler {
+func NewRouter(app *handlers.Application) http.Handler {
 	router := chi.NewRouter()
 
 	router.Use(middleware.Logger)
@@ -15,10 +17,10 @@ func (app *application) routes() http.Handler {
 	router.Use(middleware.CleanPath)
 	router.Use(middleware.StripSlashes)
 
-	router.Get("/", app.getAllSnippets)
-	router.Get("/{slug}", app.getSnippet)
-	router.Post("/", app.createSnippet)
-	router.Patch("/{slug}", app.updateSnippet)
+	router.Get("/", app.GetAllSnippets)
+	router.Get("/{slug}", app.GetSnippet)
+	router.Post("/", app.CreateSnippet)
+	router.Patch("/{slug}", app.UpdateSnippet)
 
 	return router
 }

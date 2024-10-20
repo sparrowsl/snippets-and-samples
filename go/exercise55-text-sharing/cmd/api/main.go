@@ -2,45 +2,41 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
-	"log"
+	"log/slog"
 	"net/http"
 	"time"
 
+	"text-sharing/internal/api"
+	"text-sharing/internal/api/handlers"
 	"text-sharing/internal/database"
 
 	_ "modernc.org/sqlite"
 )
 
-type application struct {
-	db *database.Queries
-}
-
 func main() {
 	db, err := sql.Open("sqlite", "./data-sharing.db")
 	if err != nil {
-		log.Fatal(err)
+		slog.Default().Error(err.Error())
 		return
 	}
 	defer db.Close()
 
 	if err := db.Ping(); err != nil {
-		log.Fatal(err)
+		slog.Default().Error(err.Error())
 		return
 	}
-	fmt.Println("connected to db successfully...")
+	slog.Default().Info("connected to db successfully...")
 
-	app := application{
-		db: database.New(db),
-	}
+	app := handlers.NewApp(database.New(db))
+	router := api.NewRouter(app)
 
 	serv := http.Server{
 		Addr:        ":5000",
-		Handler:     app.routes(),
+		Handler:     router,
 		ReadTimeout: time.Second * 5,
 	}
 
 	if err := serv.ListenAndServe(); err != nil {
-		log.Fatal(err)
+		slog.Default().Error(err.Error())
 	}
 }
