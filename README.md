@@ -1,2 +1,3 @@
-# exercises-57-challenges
-Challenges from "Exercises for Programmers 57 Challenges to Develop Your Coding Skills" book
+# Snippets and Samples
+
+Code snippets and samples for different concepts in multiple languages.
