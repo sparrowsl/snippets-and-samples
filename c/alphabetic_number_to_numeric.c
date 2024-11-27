@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void) {
   char number[15];
@@ -10,7 +11,7 @@ int main(void) {
   scanf("%s", number);
 
   int i = 0;
-  while (i < 15) {
+  while (i < (int)strlen(number)) {
     if (isdigit(number[i])) {
       printf("%c", number[i]);
     } else if (isalpha(number[i])) {
