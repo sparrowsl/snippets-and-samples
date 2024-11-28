@@ -16,11 +16,8 @@ int main(void) {
       break;
     }
 
-    if (strlen(smallest) == 0) {
-      strcpy(smallest, word);
-    }
-
-    if (strlen(smallest) > strlen(word) || strlen(smallest) == strlen(word)) {
+    if (strlen(smallest) == 0 || strlen(smallest) > strlen(word) ||
+        strlen(smallest) == strlen(word)) {
       strcpy(smallest, word);
     } else if (strlen(largest) < strlen(word)) {
       strcpy(largest, word);
