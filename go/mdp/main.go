@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/yuin/goldmark"
@@ -17,36 +18,52 @@ const (
             <meta http-equiv="content-type" content="text/html; charset=utf-8">
             <title>Markdown Preview Tool</title>
         </head>
-        <body>
-    `
+        <body>`
 	footer = `
 	</body>
     </html>`
 )
 
 func main() {
-	file := flag.String("file", "", "Markdown file to parse")
+	filename := flag.String("file", "", "Markdown file to preview")
 	flag.Parse()
 
-	if *file == "" {
-		fmt.Println("No file parsed!!!")
-		return
+	if *filename == "" {
+		flag.Usage()
+		os.Exit(1)
 	}
 
-	fileContents, err := os.ReadFile(*file)
+	if err := run(*filename); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run(filename string) error {
+	input, err := os.ReadFile(filename)
 	if err != nil {
-		fmt.Println(err.Error())
-		return
+		return err
 	}
-	p := bluemonday.UGCPolicy()
-	sanitized := p.Sanitize(string(fileContents))
 
+	htmlData := parsedContent(input)
+
+	outName := fmt.Sprintf("%s.html", filepath.Base(filename))
+	fmt.Println(outName)
+
+	return saveHTML(outName, string(htmlData))
+}
+
+func parsedContent(content []byte) []byte {
 	var buf bytes.Buffer
-	if err := goldmark.Convert([]byte(sanitized), &buf); err != nil {
-		fmt.Println(err.Error())
-		return
-	}
+	goldmark.Convert(content, &buf)
+	body := bluemonday.UGCPolicy().SanitizeBytes(buf.Bytes())
 
-	joined := header + buf.String() + footer
-	os.WriteFile("./index.html", []byte(joined), os.ModePerm)
+	joined := append([]byte(header), body...)
+	joined = append(joined, []byte(footer)...)
+
+	return joined
+}
+
+func saveHTML(dest string, data string) error {
+	return os.WriteFile(dest, []byte(data), 0644)
 }
