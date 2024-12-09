@@ -5,10 +5,10 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"path/filepath"
 
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark/parser"
 )
 
 const (
@@ -18,9 +18,9 @@ const (
             <meta http-equiv="content-type" content="text/html; charset=utf-8">
             <title>Markdown Preview Tool</title>
         </head>
-        <body>`
-	footer = `
-	</body>
+        <body>
+    `
+	footer = `</body>
     </html>`
 )
 
@@ -47,7 +47,16 @@ func run(filename string) error {
 
 	htmlData := parsedContent(input)
 
-	outName := fmt.Sprintf("%s.html", filepath.Base(filename))
+	temp, err := os.CreateTemp("", "mdp*.html")
+	if err != nil {
+		return err
+	}
+
+	if err := temp.Close(); err != nil {
+		return err
+	}
+
+	outName := temp.Name()
 	fmt.Println(outName)
 
 	return saveHTML(outName, string(htmlData))
@@ -55,7 +64,7 @@ func run(filename string) error {
 
 func parsedContent(content []byte) []byte {
 	var buf bytes.Buffer
-	goldmark.Convert(content, &buf)
+	goldmark.Convert(content, &buf, parser.WithContext(parser.NewContext()))
 	body := bluemonday.UGCPolicy().SanitizeBytes(buf.Bytes())
 
 	joined := append([]byte(header), body...)
