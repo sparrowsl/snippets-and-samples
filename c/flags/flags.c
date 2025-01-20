@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void flag_parse(char *);
-/*int str_split(char *, char);*/
+#include "lexer.h"
 
 typedef struct {
   char *key;
@@ -28,23 +27,6 @@ void map_update(Map array[], char *string) {
   }
 }
 
-/*Map pack(char *string) {*/
-/*  char *temp;*/
-/*  Map m;*/
-/**/
-/*  for (int i = 0; i < (int)strlen(string); i++) {*/
-/*    if (string[i] == '=') {*/
-/*      m.key = temp;*/
-/*    }*/
-/**/
-/*    if (string[i] == ' ') {*/
-/*      m.value = temp;*/
-/*    }*/
-/*  }*/
-/**/
-/*  return m;*/
-/*}*/
-
 int str_split(Map array[], char *string) {
   int idx = 0;
   char *temp = "";
@@ -63,12 +45,19 @@ int str_split(Map array[], char *string) {
 }
 
 int main(void) {
-  char *args = "-name=jack -valid -dsn=file://flags.db";
-  Map map[5];
+  /* char *args = "-name=jack -valid -dsn=file://flags.db"; */
+  char *args = "-name=jack -valid=true";
 
-  str_split(map, args);
+  Lexer lex = new_lexer(args);
 
-  printf("=> %s\n", map[0].key);
+  printf("%c", lex.character);
+  for (int i = 0, len = (int)strlen(args); i < len; i++) {
+    printf("%c", lexer_peek(&lex));
+    lexer_read_char(&lex);
+  }
+
+  /* printf("=> %s\n", lex.source); */
+  /* printf("=> %d\n", lex.position); */
 
   return EXIT_SUCCESS;
 }
