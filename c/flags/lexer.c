@@ -21,10 +21,9 @@ void lexer_read_char(Lexer *lexer) {
     lexer->character = lexer->source[lexer->position];
   }
 
-  lexer->position = lexer->position + 1;
+  lexer->position += 1;
 }
 
-// TODO: check the whitespace breaking.
 void lexer_skip_whitespaces(Lexer *lexer) {
   while (lexer->character == ' ' || lexer->character == '\n' ||
          lexer->character == '\t' || lexer->character == '\r') {

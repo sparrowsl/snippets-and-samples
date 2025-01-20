@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	gcc *.c -o flags -Wall -Wextra -Werror -Wdeprecated -std=gnu11
+	gcc *.c -o flags -Wall -Wextra -Werror -Wdeprecated -std=c11
 
 .PHONY: run
 run: build

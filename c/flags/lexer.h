@@ -5,11 +5,11 @@ typedef struct {
 } Lexer;
 
 
-Lexer new_lexer(char *source);
+Lexer new_lexer(char *);
 
-char lexer_peek(Lexer *lexer);
+char lexer_peek(Lexer *);
 
-void lexer_read_char(Lexer *lexer);
+void lexer_read_char(Lexer *);
 
-void lexer_skip_whitespaces(Lexer *lexer);
+void lexer_skip_whitespaces(Lexer *);
 
