@@ -9,6 +9,8 @@ Lexer new_lexer(char *);
 
 char lexer_peek(Lexer *);
 
+void lexer_advance(Lexer *);
+
 void lexer_read_char(Lexer *);
 
 void lexer_skip_whitespaces(Lexer *);
