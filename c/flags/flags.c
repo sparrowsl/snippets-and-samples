@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "tokens.h"
+#include "tokens.c"
 
 int main(void) {
   /* char *args = "-name=jack -valid -dsn=file://flags.db"; */

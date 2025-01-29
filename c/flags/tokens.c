@@ -1,7 +1,20 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-#include "tokens.h"
+#include "lexer.c"
+
+typedef enum {
+  ident,
+  equal,
+  eof,
+} TokenType;
+
+typedef struct {
+  TokenType type;
+  char *literal;
+} Token;
+
+Token token_next_token(Lexer *);
 
 Token new_token(TokenType type, char character) {
   return (Token){
@@ -10,6 +23,7 @@ Token new_token(TokenType type, char character) {
   };
 }
 
+// TODO: fix a bug in overflow of tokens
 Token token_next_token(Lexer *lexer) {
   lexer_skip_whitespaces(lexer);
 
