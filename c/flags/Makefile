@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	gcc *.c -o flags -Wall -Wextra -Werror -Wdeprecated -std=c11
+	clang flags.c -o flags -Wall -Wextra -Werror -Wdeprecated -std=c11 -fsanitize=address
 
 .PHONY: run
 run: build
