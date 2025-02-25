@@ -4,7 +4,7 @@ build:
 
 .PHONY: run
 run: build
-	./flags
+	./flags -name="john" -debug -port=5173
 
 .PHONY: clean
 clean:
