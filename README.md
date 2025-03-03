@@ -1,3 +1,3 @@
 # Snippets and Samples
 
-Code snippets and samples for different concepts in multiple languages.
+Code snippets and samples for different concepts/topics in multiple languages.
