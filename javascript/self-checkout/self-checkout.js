@@ -1,8 +1,6 @@
 import { input } from "pynput";
 
 const items = new Map();
-const price = 0.0;
-const quantity = 0;
 
 for (let i = 0; i < 3; i++) {
 	const price = Number(await input(`Enter the price of item ${i + 1}: `));
