@@ -5,7 +5,7 @@ const verb = await input("Enter a verb: ");
 const adjective = await input("Enter an adjective: ");
 const adverb = await input("Enter an adverb: ");
 
-const result = createMadLibs(noun, verb, adjective, adverb);
+const result = create_mad_libs(noun, verb, adjective, adverb);
 console.log(result);
 
 /**
@@ -16,6 +16,6 @@ console.log(result);
  * @param {string} adjective
  * @returns {string}
  */
-function createMadLibs(noun, verb, adjective, adverb) {
+function create_mad_libs(noun, verb, adjective, adverb) {
 	return `Do you ${verb} your ${adjective} ${noun} ${adverb}? That's hilarious`;
 }

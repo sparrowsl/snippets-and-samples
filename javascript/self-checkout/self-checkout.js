@@ -10,13 +10,13 @@ for (let i = 0; i < 3; i++) {
 }
 
 let subtotal = 0.0;
-const taxRate = 5.5;
+const tax_rate = 5.5;
 
 for (const [_, value] of items) {
 	subtotal += value.price * value.quantity;
 }
 
-const tax = (taxRate / 100) * subtotal;
+const tax = (tax_rate / 100) * subtotal;
 console.log(`Subtotal: $${subtotal.toFixed(2)}`);
 console.log(`Tax: $${tax.toFixed(2)}`);
 console.log(`Total: $${(subtotal + tax).toFixed(2)}`);

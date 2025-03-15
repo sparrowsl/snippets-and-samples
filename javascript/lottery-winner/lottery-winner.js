@@ -1,5 +1,6 @@
 import { input } from "pynput";
 
+/** @type {string[]} */
 const names = [];
 
 while (true) {

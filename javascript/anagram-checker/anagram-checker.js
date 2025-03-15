@@ -4,7 +4,7 @@ console.log("Enter two strings and I'll tell you if they are anagrams:");
 const first = await input("Enter the first string: ");
 const second = await input("Enter the second string: ");
 
-if (isAnagram(first, second)) {
+if (is_anagram(first, second)) {
 	console.log(`"${first}" and "${second}" are anagrams.`);
 }
 
@@ -12,7 +12,7 @@ if (isAnagram(first, second)) {
  * @param {string} first
  * @param {string} second
  */
-function isAnagram(first, second) {
+function is_anagram(first, second) {
 	if (first.length !== second.length) {
 		return false;
 	}

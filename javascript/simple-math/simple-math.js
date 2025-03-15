@@ -1,33 +1,19 @@
 import { input } from "pynput";
 
-const firstNumber = Number(await input("What is the first number? "));
-const secondNumber = Number(await input("What is the second number? "));
+const first_number = Number(await input("What is the first number? "));
+const second_number = Number(await input("What is the second number? "));
 
-const sum = add(firstNumber, secondNumber);
-const difference = subtract(firstNumber, secondNumber);
-const product = multiply(firstNumber, secondNumber);
-const quotient = divide(firstNumber, secondNumber);
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
+const multiply = (a, b) => a * b;
+const divide = (a, b) => (b === 0 ? 0 : a / b);
 
-console.log(`${firstNumber} + ${secondNumber} = ${sum}`);
-console.log(`${firstNumber} - ${secondNumber} = ${difference}`);
-console.log(`${firstNumber} * ${secondNumber} = ${product}`);
-console.log(`${firstNumber} / ${secondNumber} = ${quotient}`);
+const sum = add(first_number, second_number);
+const difference = subtract(first_number, second_number);
+const product = multiply(first_number, second_number);
+const quotient = divide(first_number, second_number);
 
-function add(a, b) {
-	return a + b;
-}
-
-function subtract(a, b) {
-	return a - b;
-}
-
-function multiply(a, b) {
-	return a * b;
-}
-
-function divide(a, b) {
-	if (b === 0) {
-		return 0;
-	}
-	return a / b;
-}
+console.log(`${first_number} + ${second_number} = ${sum}`);
+console.log(`${first_number} - ${second_number} = ${difference}`);
+console.log(`${first_number} * ${second_number} = ${product}`);
+console.log(`${first_number} / ${second_number} = ${quotient}`);

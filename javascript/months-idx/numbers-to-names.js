@@ -15,5 +15,5 @@ const months = [
 	"December",
 ];
 
-const monthIndex = await input("Please enter the number of the month: ");
-console.log(`The name of the month is ${months[monthIndex - 1]}`);
+const month_index = await input("Please enter the number of the month: ");
+console.log(`The name of the month is ${months[month_index - 1]}`);

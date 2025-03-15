@@ -5,16 +5,16 @@ let employees = read_employees().split("\n");
 display_employees(employees);
 
 const name = await input("Enter an employee name to remove: ");
-const nameIdx = employees.indexOf(name);
+const name_idx = employees.indexOf(name);
 
-if (nameIdx < 0) {
+if (name_idx < 0) {
 	console.error(`"${name}" is not found`);
 	process.exit(0);
 }
 
 employees = Array().concat(
-	employees.slice(0, nameIdx),
-	employees.slice(nameIdx + 1),
+	employees.slice(0, name_idx),
+	employees.slice(name_idx + 1),
 );
 
 display_employees(employees);
