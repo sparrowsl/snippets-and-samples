@@ -5,7 +5,7 @@ pub fn main() !void {
     var buffer: [20]u8 = undefined;
 
     std.debug.print("What is your name? ", .{});
-    const name = try stdin.readUntilDelimiter(buffer[0..], '\n');
+    const name = try stdin.readUntilDelimiter(&buffer, '\n');
 
     std.debug.print("Hello, {s}, nice to meet you!", .{name});
 }

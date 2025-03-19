@@ -5,7 +5,7 @@ pub fn main() !void {
     var buffer: [5]u8 = undefined;
 
     std.debug.print("Please enter the number of the month: ", .{});
-    const input = try stdin.readUntilDelimiter(buffer[0..], '\n');
+    const input = try stdin.readUntilDelimiter(&buffer, '\n');
 
     const month_idx = try std.fmt.parseInt(i32, input, 10);
 

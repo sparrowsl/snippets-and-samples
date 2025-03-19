@@ -5,7 +5,7 @@ pub fn main() !void {
     var buffer: [100]u8 = undefined;
 
     std.debug.print("What is the input string? ", .{});
-    const string = try stdin.readUntilDelimiter(buffer[0..], '\n');
+    const string = try stdin.readUntilDelimiter(&buffer, '\n');
 
     if (string.len == 0) {
         std.debug.print("Please enter something..", .{});
