@@ -7,10 +7,10 @@ pub fn main() !void {
     std.debug.print("How many numbers to add? ", .{});
     var input = try stdin.readUntilDelimiter(buffer[0..], '\n');
 
-    const numbers_limit: u32 = try std.fmt.parseInt(u32, input, 10) catch 0;
+    const limit: u32 = std.fmt.parseInt(u32, input, 10) catch 0;
     var sum: i32 = 0;
 
-    for (0..numbers_limit) |_| {
+    for (0..limit) |_| {
         std.debug.print("Enter a number: ", .{});
         input = try stdin.readUntilDelimiter(buffer[0..], '\n');
 
