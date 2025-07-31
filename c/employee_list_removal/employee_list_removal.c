@@ -4,31 +4,23 @@
 #include <string.h>
 
 void display_employees(char *[], int);
-void remove_employee(char *[], char *, int);
+void remove_employee(char *[], char *, int *);
 bool find_employee(char *[], char *, int);
 
-char *names[] = {"John Smith", "Jackie Jackson", "Chris Jones", "Amanda Cullen",
-                 "Jeremy Goodwin"};
-
 int main(void) {
+  char *names[] = {"John Smith", "Jackie Jackson", "Chris Jones",
+                   "Amanda Cullen", "Jeremy Goodwin"};
+  // never recalculate the array length after first calculation.
   int array_length = sizeof(names) / sizeof(names[0]);
-  char remove[15];
+  char name_to_remove[15];
 
   display_employees(names, array_length);
 
   printf("Enter an employee name to remove: ");
-  fgets(remove, 15, stdin);
-  remove[strcspn(remove, "\n")] = 0;
+  fgets(name_to_remove, 15, stdin);
+  name_to_remove[strcspn(name_to_remove, "\n")] = 0;
 
-  /*if (find_employee(names, remove, initial_names_length)) {*/
-  /*} else {*/
-  /*  puts("No employee name found");*/
-  /*}*/
-  remove_employee(names, remove, array_length);
-
-  printf("Exist: %d\n", find_employee(names, remove, array_length));
-
-  array_length = sizeof(names) / sizeof(names[0]);
+  remove_employee(names, name_to_remove, &array_length);
 
   display_employees(names, array_length);
   return EXIT_SUCCESS;
@@ -41,11 +33,17 @@ void display_employees(char *employees[], int len) {
   }
 }
 
-void remove_employee(char *array[], char *name, int length) {
-  for (int i = 0; i < length; i++) {
+void remove_employee(char *array[], char *name, int *length) {
+  for (int i = 0; i < *length; i++) {
     if (!strcmp(array[i], name)) {
       printf("found %s\n", name);
-      array[i] = array[i + 1];
+      // Shift elements to the left
+      for (int j = i; j < *length - 1; j++) {
+        array[j] = array[j + 1];
+      }
+
+      (*length)--;
+      return;
     }
   }
 }
