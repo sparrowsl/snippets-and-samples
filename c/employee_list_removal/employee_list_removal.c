@@ -8,8 +8,23 @@ void remove_employee(char *[], char *, int *);
 bool find_employee(char *[], char *, int);
 
 int main(void) {
-  char *names[] = {"John Smith", "Jackie Jackson", "Chris Jones",
-                   "Amanda Cullen", "Jeremy Goodwin"};
+  FILE *file = fopen("./employees.txt", "r");
+  if (file == NULL) {
+    perror("Error opening file");
+    return 1;
+  }
+
+  char *names[5]; // array of pointers to strings
+  char buffer[100];
+
+  int i = 0;
+  while (i < 5 && fgets(buffer, sizeof(buffer), file)) {
+    buffer[strcspn(buffer, "\n")] = '\0';
+    names[i] = strdup(buffer); // dynamically allocate and copy the string
+    i++;
+  }
+  fclose(file);
+
   // never recalculate the array length after first calculation.
   int array_length = sizeof(names) / sizeof(names[0]);
   char name_to_remove[15];
@@ -23,6 +38,9 @@ int main(void) {
   remove_employee(names, name_to_remove, &array_length);
 
   display_employees(names, array_length);
+  for (int i = 0; i < array_length; i++) {
+    free(names[i]);
+  }
   return EXIT_SUCCESS;
 }
 
