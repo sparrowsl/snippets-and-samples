@@ -26,9 +26,8 @@ pub fn main() !void {
 
     display_employees(employees_list);
 
-    var name_buffer: [100]u8 = undefined;
     std.debug.print("Enter an employee name to remove: ", .{});
-    const name = try stdin.readUntilDelimiter(name_buffer[0..], '\n');
+    const name = try stdin.readUntilDelimiter(buffer[0..], '\n');
 
     remove_employee(&employees_list, name);
 
