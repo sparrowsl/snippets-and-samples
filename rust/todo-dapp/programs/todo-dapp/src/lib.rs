@@ -16,22 +16,20 @@ pub mod todo_dapp {
         Ok(())
     }
 
-    pub fn update_todo(
-        ctx: Context<UpdateTodo>,
-        id: u64,
-        task: String,
-        is_done: bool,
-    ) -> Result<()> {
-        msg!("Greetings!! updating todo with id: {}", id);
+    pub fn update_todo(ctx: Context<UpdateTodo>, task: String, is_done: bool) -> Result<()> {
         let todo = &mut ctx.accounts.todo;
+        msg!("Greetings!! updating todo with id: {}", todo.id);
         todo.task = task;
         todo.is_done = is_done;
 
         Ok(())
     }
 
-    pub fn delete_todo(_ctx: Context<DeleteTodo>, id: u64) -> Result<()> {
-        msg!("Greetings!! deleting todo with id: {}", id);
+    pub fn delete_todo(ctx: Context<DeleteTodo>) -> Result<()> {
+        msg!(
+            "Greetings!! deleting todo with id: {}",
+            ctx.accounts.todo.id
+        );
 
         Ok(())
     }
