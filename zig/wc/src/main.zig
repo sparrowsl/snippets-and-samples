@@ -5,7 +5,18 @@ pub fn main() !void {
     var stdin = std.fs.File.stdin().reader(&buffer);
     const reader = &stdin.interface;
 
-    const sum = count(reader, false);
+    var count_lines = false;
+
+    var args = std.process.args();
+    _ = args.skip();
+
+    while (args.next()) |arg| {
+        if (std.mem.eql(u8, arg, "-l")) {
+            count_lines = true;
+        }
+    }
+
+    const sum = count(reader, count_lines);
     std.debug.print("sum: {d}\n", .{sum});
 }
 
