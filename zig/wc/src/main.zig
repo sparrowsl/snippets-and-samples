@@ -6,13 +6,13 @@ pub fn main() !void {
     const reader = &stdin.interface;
 
     const sum = count(reader);
-    std.debug.print("{d}", .{sum});
+    std.debug.print("sum: {d}\n", .{sum});
 }
 
 fn count(reader: *std.Io.Reader) i32 {
-    const contents = reader.peekDelimiterExclusive('\n') catch return 0;
+    const contents = reader.allocRemaining(std.heap.page_allocator, .unlimited) catch return 0;
 
-    var it = std.mem.tokenizeAny(u8, contents, " ");
+    var it = std.mem.tokenizeAny(u8, contents, " \n\t\r");
     var wc: i32 = 0;
 
     while (it.next()) |_| {
@@ -26,5 +26,6 @@ test "test count words" {
     var reader = std.Io.Reader.fixed("hello world\n");
 
     const s = count(&reader);
+    std.debug.print("num: {d}\n", .{s});
     try std.testing.expectEqual(s, 2);
 }
