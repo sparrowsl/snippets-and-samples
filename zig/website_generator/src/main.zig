@@ -37,6 +37,7 @@ pub fn main() !void {
     const add_css = try reader.interface.takeByte();
 
     std.fs.cwd().makeDir(site_name) catch |err| switch (err) {
+        error.PathAlreadyExists => std.debug.print("Created ./{s}\n", .{site_name}),
         else => std.debug.print("Created ./{s}\n", .{site_name}),
     };
 
